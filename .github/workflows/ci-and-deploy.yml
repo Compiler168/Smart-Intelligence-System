@@ -43,7 +43,7 @@ jobs:
           done
           kill "$pid"
 
-  ml-service-ci:
+  ml-ci:
     name: ML service CI and smoke test
     runs-on: ubuntu-latest
     steps:
@@ -102,9 +102,9 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/loan-backend:latest
             ghcr.io/${{ github.repository_owner }}/loan-backend:${{ github.sha }}
 
-  publish-ml-service-image:
-    name: Publish ML service Docker image to GHCR
-    needs: ml-service-ci
+  publish-ml-image:
+    name: Publish ML Docker image to GHCR
+    needs: ml-ci
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -124,12 +124,12 @@ jobs:
           file: ./ml/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/loan-ml-service:latest
-            ghcr.io/${{ github.repository_owner }}/loan-ml-service:${{ github.sha }}
+            ghcr.io/${{ github.repository_owner }}/loan-ml:latest
+            ghcr.io/${{ github.repository_owner }}/loan-ml:${{ github.sha }}
 
-  deploy-ml-service-fly:
+  deploy-ml-fly:
     name: Deploy ML service to Fly.io
-    needs: ml-service-ci
+    needs: ml-ci
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
@@ -145,7 +145,7 @@ jobs:
 
   deploy-backend-fly:
     name: Deploy backend to Fly.io
-    needs: [backend-ci, deploy-ml-service-fly]
+    needs: [backend-ci, deploy-ml-fly]
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
