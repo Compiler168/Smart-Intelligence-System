@@ -1,0 +1,34 @@
+# Template for android/local.properties
+# Copy this to android/local.properties and fill in your values
+
+# ========================================
+# Android SDK Configuration
+# ========================================
+# Update this to your Android SDK installation path
+# Windows example:
+sdk.dir=C:\\Users\\YourUsername\\AppData\\Local\\Android\\Sdk
+# Mac example:
+# sdk.dir=/Users/YourUsername/Library/Android/sdk
+# Linux example:
+# sdk.dir=/home/username/Android/Sdk
+
+# ========================================
+# API Configuration for Development
+# ========================================
+
+# For Android Emulator (use 10.0.2.2 to access localhost)
+API_BASE_URL="http://10.0.2.2:5000/api/"
+
+# For Physical Device (use your computer's IP address)
+# Find your IP: 
+#   - Windows: ipconfig (look for IPv4 Address)
+#   - Mac/Linux: ifconfig (look for inet)
+# Example:
+# API_BASE_URL="http://192.168.1.100:5000/api/"
+
+# ========================================
+# Build Configuration
+# ========================================
+# Leave these as defaults
+android.useAndroidX=true
+android.enableJetifier=true
