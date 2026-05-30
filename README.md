@@ -241,137 +241,112 @@ Firebase Firestore Database
 ```
 Loan/
 │
-├── 📱 FRONTEND LAYER
-│   └── android/                       # Android Application (Java + Gradle)
-│       ├── app/
-│       │   ├── build.gradle            # App build configuration
-│       │   ├── google-services.json    # Firebase config (local only)
-│       │   ├── proguard-rules.pro      # Code obfuscation rules
-│       │   └── src/
-│       │       ├── androidTest/        # Android instrumented tests
-│       │       ├── main/
-│       │       │   ├── AndroidManifest.xml
-│       │       │   ├── java/com/smartloan/ai/   # Java source code
-│       │       │   │   ├── data/api/            # API client & interceptor
-│       │       │   │   ├── data/models/         # Data classes
-│       │       │   │   ├── ui/                  # UI layers & ViewModels
-│       │       │   │   └── utils/               # Utilities & helpers
-│       │       │   └── res/                     # Layouts, drawables, strings
-│       │       └── test/
-│       ├── gradle/wrapper/             # Gradle wrapper config
-│       ├── build.gradle                # Project build config
-│       ├── gradle.properties
-│       ├── settings.gradle
-│       └── local.properties            # Local SDK path (ignored)
+├── android/                         # Native Android Application
+│   ├── app/
+│   │   ├── build.gradle
+│   │   ├── google-services.json      # Firebase config (local only)
+│   │   ├── proguard-rules.pro
+│   │   └── src/
+│   │       ├── androidTest/
+│   │       ├── main/
+│   │       │   ├── AndroidManifest.xml
+│   │       │   ├── java/com/smartloan/ai/
+│   │       │   │   ├── data/api/
+│   │       │   │   ├── data/models/
+│   │       │   │   ├── ui/
+│   │       │   │   └── utils/
+│   │       │   └── res/
+│   │       └── test/
+│   ├── gradle/wrapper/
+│   ├── build.gradle
+│   ├── gradle.properties
+│   ├── settings.gradle
+│   └── local.properties
 │
-├── 🔧 BACKEND LAYER
-│   └── backend/                        # Express.js API Server
-│       ├── Dockerfile                  # Backend container definition
-│       ├── package.json
-│       ├── package-lock.json
-│       ├── .env.template               # Env config template
-│       └── src/
-│           ├── server.js               # Express app entrypoint
-│           ├── config/
-│           │   └── firebase.js         # Firestore initialization
-│           ├── controllers/            # Business logic
-│           │   ├── AuthController.js
-│           │   ├── LoanController.js
-│           │   ├── FinancialController.js
-│           │   ├── ChatController.js
-│           │   └── ReportController.js
-│           ├── middleware/
-│           │   └── auth.js             # JWT verification
-│           ├── models/                 # Firestore document models
-│           │   ├── User.js
-│           │   ├── Prediction.js
-│           │   ├── Analysis.js
-│           │   ├── ChatSession.js
-│           │   └── Report.js
-│           └── routes/                 # API endpoints
-│               ├── auth.js
-│               ├── loans.js
-│               ├── financial.js
-│               ├── chat.js
-│               └── reports.js
+├── backend/                         # Express.js API Server
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── package-lock.json
+   ├── .env.template
+   └── src/
+     ├── server.js
+     ├── config/
+     │   └── firebase.js
+     ├── controllers/
+     │   ├── AuthController.js
+     │   ├── LoanController.js
+     │   ├── FinancialController.js
+     │   ├── ChatController.js
+     │   └── ReportController.js
+     ├── middleware/
+     │   └── auth.js
+     ├── models/
+     │   ├── User.js
+     │   ├── Prediction.js
+     │   ├── Analysis.js
+     │   ├── ChatSession.js
+     │   └── Report.js
+     └── routes/
+       ├── auth.js
+       ├── loans.js
+       ├── financial.js
+       ├── chat.js
+       └── reports.js
 │
-├── 🤖 ML SERVICE LAYER
-│   └── ml/                             # Python FastAPI ML Service
-│       ├── Dockerfile
-│       ├── main.py                     # FastAPI application
-│       ├── requirements.txt
-│       ├── .env.template
-│       │
-│       ├── 📊 DATA LAYER
-│       ├── eda/
-│       │   ├── 📁 Raw Data
-│       │   │   └── data/raw/
-│       │   │       └── loan_dataset.csv        # Original dataset (~10k rows)
-│       │   │
-│       │   ├── 📁 Cleaned Data
-│       │   │   └── data/cleaned/
-│       │   │       └── loan_dataset_cleaned.csv  # Preprocessed dataset
-│       │   │
-│       │   └── 📁 EDA & Analysis
-│       │       └── analysis/
-│       │           ├── eda_report.md            # Analysis report
-│       │           ├── eda_script.py            # EDA notebook code
-│       │           ├── data_cleaning.py         # Preprocessing pipeline
-│       │           │
-│       │           └── 📁 Visualizations
-│       │               ├── target_dist.png                    # Approval distribution
-│       │               ├── correlation_heatmap.png           # Feature correlations
-│       │               ├── credit_score_vs_approved.png      # Feature relationship 1
-│       │               ├── dti_ratio_vs_approved.png         # Feature relationship 2
-│       │               ├── loan_amount_vs_approved.png       # Feature relationship 3
-│       │               └── monthly_income_vs_approved.png    # Feature relationship 4
-│       │
-│       ├── 🤖 MODEL TRAINING & ARTIFACTS
-│       ├── models/
-│       │   ├── model_metadata.json     # Model info & feature list
-│       │   ├── xgboost_model.pkl       # XGBoost ensemble
-│       │   ├── random_forest.pkl       # Random Forest model
-│       │   ├── logistic_regression.pkl # Logistic Regression
-│       │   ├── scaler.pkl              # Feature scaling object
-│       │   ├── label_encoder.pkl       # Categorical encoder
-│       │   └── feature_columns.pkl     # Feature column names
-│       │
-│       ├── training/
-│       │   ├── generate_data.py        # Synthetic data generation
-│       │   └── train_models.py         # Model training pipeline
-│       │
-│       ├── 🔮 PREDICTION & DEPLOYMENT
-│       ├── services/
-│       │   ├── __init__.py
-│       │   ├── prediction_engine.py    # Ensemble prediction
-│       │   ├── health_scorer.py        # Health scoring model
-│       │   ├── risk_analyzer.py        # Risk analysis engine
-│       │   ├── nlp_engine.py           # NLP & chatbot logic
-│       │   ├── simulation_engine.py    # Financial simulator
-│       │   └── document_analyzer.py    # Document parsing
-│       │
-│       └── ⚙️ TESTING
-│           └── tests/
-│               └── test_engines.py     # Unit tests for services
+├── ml/                              # Python FastAPI ML Service
+│   ├── Dockerfile
+│   ├── main.py
+│   ├── requirements.txt
+│   ├── .env.template
+│   ├── eda/
+│   │   ├── data/
+│   │   │   ├── raw/
+│   │   │   │   └── loan_dataset.csv
+│   │   │   └── cleaned/
+│   │   │       └── loan_dataset_cleaned.csv
+│   │   └── analysis/
+│   │       ├── eda_report.md
+│   │       ├── eda_script.py
+│   │       ├── data_cleaning.py
+│   │       ├── target_dist.png
+│   │       ├── correlation_heatmap.png
+│   │       ├── credit_score_vs_approved.png
+│   │       ├── dti_ratio_vs_approved.png
+│   │       ├── loan_amount_vs_approved.png
+│   │       └── monthly_income_vs_approved.png
+│   ├── models/
+   │   ├── model_metadata.json
+   │   ├── xgboost_model.pkl
+   │   ├── random_forest.pkl
+   │   ├── logistic_regression.pkl
+   │   ├── scaler.pkl
+   │   ├── label_encoder.pkl
+   │   └── feature_columns.pkl
+   ├── training/
+   │   ├── generate_data.py
+   │   └── train_models.py
+   ├── services/
+   │   ├── __init__.py
+   │   ├── prediction_engine.py
+   │   ├── health_scorer.py
+   │   ├── risk_analyzer.py
+   │   ├── nlp_engine.py
+   │   ├── simulation_engine.py
+   │   └── document_analyzer.py
+   └── tests/
+     └── test_engines.py
 │
-├── 🔄 CI/CD & DEPLOYMENT
-│   └── .github/
-│       └── workflows/
-│           └── ci-and-deploy.yml       # GitHub Actions pipeline
+├── .github/
+│   └── workflows/
+│       └── ci-and-deploy.yml
 │
-├── 📖 DOCUMENTATION
-│   ├── README.md                       # This file
-│   ├── ARCHITECTURE.md                 # System architecture
-│   ├── DEPLOYMENT.md                   # Deployment guide
-│   ├── LICENSE                         # MIT License
-│   └── (Config Files)
-│       ├── vercel.json                 # Vercel config (if applicable)
-│       ├── test_auth.js                # Auth test suite
-│       ├── test_features.js            # Feature test suite
-│       ├── test_firestore.js           # DB test suite
-│       ├── requirements.txt            # Root Python requirements
-│       ├── package.json                # Root package config
-│       └── loan-9e495-firebase-adminsdk-fbsvc-97db8bb313.json  # Firebase key (local only)
+├── ARCHITECTURE.md
+├── DEPLOYMENT.md
+├── DesignSystem.md
+├── LICENSE
+├── README.md
+├── package.json
+└── .gitignore
 ```
 
 ### Folder Details
